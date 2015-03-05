@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <tuple>
 #include <string>
-#include <sstream>
+#include <cassert>
 
 namespace birch
 {
@@ -18,17 +18,19 @@ namespace birch
     enum Shape    { RECTANGULAR, CIRCULAR };
     enum Orientation { HORIZONTAL, VERTICAL };
 
-	sf::RectangleShape MakeRect(sf::Vector2f,
-	                            sf::Vector2f,
-								float = 1.f);
+    sf::RectangleShape MakeRect(sf::Vector2f,
+                                sf::Vector2f,
+                                float = 1.f);
 
-	void DrawDottedLine(sf::RenderTarget*,
-	                    const sf::Vector2f&,
-						const sf::Vector2f&,
-						const sf::Color&,
-						float = 3.f,
-						float = 1.f);
+    void DrawDottedLine(sf::RenderTarget*,
+                        const sf::Vector2f&,
+                        const sf::Vector2f&,
+                        const sf::Color&,
+                        float = 3.f,
+                        float = 1.f);
 
+    void SetTextAtCenter(sf::Text&, float, float, float, float);
+    sf::CircleShape PlotPoint(float, float, float, const sf::Color&);
 
     struct DataFormat
     {
@@ -109,7 +111,6 @@ namespace birch
         void setString(const std::string& str) { text.setString(str); }
         void setTextColor(const sf::Color &c) { text.setColor(c); }
         std::string getString() const { return text.getString(); }
-        void setCenterText(float, float, float, float);
 
         friend class GraphLegend ;
         friend class GraphBase ;
@@ -128,10 +129,12 @@ namespace birch
         void                         createLegendObjects();
 
     public:
-        GraphLegend() : before_text{true},
-                        text_matches_key_color{true},
-                        bg_color{sf::Color::White},
-                        font_color{sf::Color::Black} {}
+        GraphLegend() :
+            exists{true},
+            before_text{true},
+            text_matches_key_color{true},
+            bg_color{sf::Color::White},
+            font_color{sf::Color::Black} {}
 
         void addData(const std::vector<DataFormat>& d) { legend_data = d; }
 
@@ -139,6 +142,7 @@ namespace birch
         Orientation                  orientation ;
         bool                         before_text ;
         bool                         text_matches_key_color ;
+        bool                         exists ;
 
 
         float                        height, width ;
@@ -158,60 +162,75 @@ namespace birch
         friend class GraphBase;
     };
 
-	class GraphBase
-	{
+    class GraphBase
+    {
 
-	protected:
-		sf::RenderTexture chart_texture ;
-		sf::RenderTexture screen_texture ;
-		sf::RenderTexture legend_texture ;
+    protected:
+        sf::RenderTexture chart_texture ;
+        sf::RenderTexture screen_texture ;
+        sf::RenderTexture legend_texture ;
 
-		sf::Color         screen_bg_color ;
-		sf::Color         chart_bg_color ;
+        sf::Color         screen_bg_color ;
+        sf::Color         chart_bg_color ;
 
-		std::vector<sf::Text>     text_elements ;
+        std::vector<sf::Text>     text_elements ;
 
-		void copyToScreen(sf::RenderWindow*);
+        void copyToScreen(sf::RenderWindow*);
         void createTexture();
         void createLegendMetrics();
+        void loadFonts();
 
-	public:
+    public:
 
-		float chart_height, chart_width ;
-		float screen_height, screen_width ;
+        float chart_height, chart_width ;
+        float screen_height, screen_width ;
 
-		float axes_thickness ;
+        float axes_thickness ;
 
-		struct {
+        struct {
             float x, y ;
-		} chart_offsets ;
+        } chart_offsets ;
 
-		struct {
+        struct {
             float top, bottom, right, left ;
-		} screen_margins ;
+        } screen_margins ;
 
-		GraphLegend            legend ;
+        struct {
+            float thickness ;
+            sf::Color color ;
+            struct {
+                float font_size ;
+                sf::Color font_color, bg_color ;
+                sf::Font font ;
+            } labels;
+        } axes;
 
-		GraphBase() :
-		    axes_thickness{2.0},
-		    screen_bg_color{sf::Color::White},
-		    chart_bg_color{sf::Color::White},
-		    chart_offsets{ 0.f, 0.f } {};
+        GraphLegend            legend ;
+
+        GraphBase() :
+            screen_bg_color{sf::Color::White},
+            chart_bg_color{sf::Color::White},
+            chart_offsets{ 0.f, 0.f },
+            axes{2.f, sf::Color::Black, {
+                15.f, sf::Color::Black, sf::Color::White,
+                sf::Font()
+            }} {};
+
         GraphBase(const GraphBase&) = default ;
 
         void setChartBackgroundColor(const sf::Color& c) { chart_bg_color = c; }
         void setScreenBackgroundColor(const sf::Color& c) { screen_bg_color = c; }
         void addTextElement(const sf::Text& t) { text_elements.push_back(t); }
         void setDimensions(float x, float y) { screen_width = x; screen_height = y; }
-        void setDefaultLegendMetrics(Position p = BOTTOM) { legend.position = p; }
+        void setDefaultLegendMetrics(Position p = LEFT) { legend.position = p; }
 
-		void drawAxes(float = 2.f, sf::Color = sf::Color::Black);
-		void drawTextElements();
-		void drawToScreen(sf::RenderWindow*);
-		virtual void render() = 0 ;
-	};
+        void drawAxes();
+        void drawTextElements();
+        void drawToScreen(sf::RenderWindow*);
+        virtual void render() = 0 ;
+    };
 
-	typedef sf::Text TextElement ;
+    typedef sf::Text TextElement ;
 
 }
 

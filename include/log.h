@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 
 #define  LOG(X) std::cout << "[" << __LINE__ << "] " << __PRETTY_FUNCTION__ << " : "  << X << std::endl ;
+#define  FSTART LOG("entered")
+#define  FEND   LOG("finished")
 
 namespace birch
 {

@@ -30,3 +30,7 @@
 #Directories
 /bin
 /obj
+
+# Code blocks layout files
+*.layout
+*.save

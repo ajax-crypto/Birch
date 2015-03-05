@@ -31,7 +31,8 @@ namespace birch
 
     protected:
 		std::vector<std::vector<float>> multi_data ;
-		std::vector<DataFormat>         data ;
+		std::vector<std::string>        axes_labels ;
+		std::vector<sf::Color>          bar_colors;
 
 		float gap ;
 		float max ;
@@ -40,7 +41,8 @@ namespace birch
 	public:
 
 		MultiBarGraph(const std::vector<std::vector<float>>&,
-                      const std::vector<DataFormat>&);
+                      const std::vector<std::string>&,
+                      const std::vector<sf::Color>&);
 
 		void render();
 		void setGap(float g) { gap = g; }

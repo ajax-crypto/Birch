@@ -66,13 +66,14 @@ void Demo()
                                           birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
                                           birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
                                           birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) }
-                                        }, true);
+                                        }, false);
             break;
 
         case '2':
             graph = new birch::MultiBarGraph(
                     { { 20, 20 }, { 35, 56 }, { 12, 17 }, { 23, 29 } },
-                    { { "AAA", sf::Color(50, 200, 50) }, { "BBB", sf::Color(50, 50, 200)} });
+                    { "AAA", "BBB", "CCC", "DDD" },
+                    { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });
             graph->legend.addData({ { "AAA", sf::Color(50, 200, 50) }, { "BBB", sf::Color(50, 50, 200) } });
             break;
 
