@@ -4,12 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include "log.h"
 #include <cmath>
-#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <tuple>
 #include <string>
 #include <cassert>
+#include <iomanip>
 
 namespace birch
 {
@@ -31,6 +31,7 @@ namespace birch
 
     void SetTextAtCenter(sf::Text&, float, float, float, float);
     sf::CircleShape PlotPoint(float, float, float, const sf::Color&);
+    unsigned int    DigitCount(float);
 
     struct DataFormat
     {

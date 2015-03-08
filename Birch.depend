@@ -9,16 +9,16 @@
 	"base.h"
 	"bar.h"
 
-1425574162 f:\code\c++\birch\include\base.h
+1425748388 f:\code\c++\birch\include\base.h
 	<SFML/Graphics.hpp>
 	"log.h"
 	<cmath>
-	<iostream>
 	<vector>
 	<algorithm>
 	<tuple>
 	<string>
 	<cassert>
+	<iomanip>
 
 1415563903 f:\code\game\sfml-2.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -354,13 +354,13 @@
 	<string>
 	<vector>
 
-1425573132 f:\code\c++\birch\include\bar.h
+1425800446 f:\code\c++\birch\include\bar.h
 	"base.h"
 
-1425573665 source:f:\code\c++\birch\src\bar.cpp
+1425748527 source:f:\code\c++\birch\src\bar.cpp
 	"..\include\bar.h"
 
-1425572300 source:f:\code\c++\birch\src\base.cpp
+1425743001 source:f:\code\c++\birch\src\base.cpp
 	"..\include\base.h"
 
 1425402453 source:f:\code\c++\birch\src\histogram.cpp
@@ -387,9 +387,10 @@
 1424967522 f:\code\c++\birch\include\radar.h
 	"base.h"
 
-1425415748 f:\code\c++\birch\include\log.h
+1425801985 f:\code\c++\birch\include\log.h
 	<string>
 	<sstream>
+	<iostream>
 	<SFML/Graphics.hpp>
 
 1425404083 source:f:\code\c++\birch\src\log.cpp

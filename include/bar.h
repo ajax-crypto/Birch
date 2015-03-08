@@ -15,9 +15,10 @@ namespace birch
 
 		float max ;
 		float width ;
+		float vsize ;
 
 	public:
-		BarGraph(const std::vector<DataElement>&, bool = true);
+		BarGraph(const std::vector<DataElement>&, bool = true, bool = true);
 
 		void render();
 
@@ -34,9 +35,9 @@ namespace birch
 		std::vector<std::string>        axes_labels ;
 		std::vector<sf::Color>          bar_colors;
 
-		float gap ;
 		float max ;
 		float width ;
+		float vsize ;
 
 	public:
 
@@ -45,7 +46,9 @@ namespace birch
                       const std::vector<sf::Color>&);
 
 		void render();
-		void setGap(float g) { gap = g; }
+
+        float gap ;
+		bool display_values ;
 	};
 
 }

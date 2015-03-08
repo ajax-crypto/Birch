@@ -75,8 +75,8 @@ namespace birch
     void SetTextAtCenter(sf::Text &text, float x, float y, float w, float h)
     {
         FSTART;
-        float offsetx = (w - text.getLocalBounds().width)/2 ,
-              offsety = (h - text.getLocalBounds().height)/2;
+        float offsetx = (w - text.getLocalBounds().width)/2.f ,
+              offsety = (h - text.getLocalBounds().height)/2.f ;
         text.setPosition(sf::Vector2f(x + offsetx, y + offsety));
         FEND;
     }
@@ -89,6 +89,18 @@ namespace birch
         cs.setFillColor(color);
         FEND;
         return cs ;
+    }
+
+    unsigned int DigitCount(float val)
+    {
+        unsigned int dc = 0u ;
+        int v = static_cast<int>(val);
+        while(v > 0)
+        {
+            dc++ ;
+            v /= 10 ;
+        }
+        return dc ;
     }
 
     GraphLegendUnit::GraphLegendUnit(float x, float y, const sf::Color& c, const std::string& str)
