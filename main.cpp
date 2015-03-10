@@ -98,20 +98,33 @@ void Demo()
 
         case '4':
             graph = new birch::LineGraph({ 23, 45, 18, 16, 33 });
-            break;
+            break;*/
 
         case '5':
-            graph = new birch::PieChart({ 23, 45, 12, 42, 32 },
-                    {sf::Color(0, 204, 102),
-                     sf::Color(0, 102, 204),
-                     sf::Color(153, 153, 0),
-                     sf::Color(255, 51, 153),
-                     sf::Color(102, 51, 0),
-                     sf::Color(255, 255, 0) });
-            std::cout << "Pie chart is polygonal ? (y/n) ";
+            graph = new birch::PieChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
+                                          birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
+                                          birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
+                                          birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) }
+                                        });
+            std::cout << "Pie chart type : (1 = Normal, 2 = Polygonal, 3 = Donut) ";
             std::cin >> option ;
-            dynamic_cast<birch::PieChart*>(graph)->setPolygonal(option == 'y');
+            switch(option)
+            {
+            case '1':
+                dynamic_cast<birch::PieChart*>(graph)->type = birch::NORMAL ;
+                break;
+            case '2':
+                dynamic_cast<birch::PieChart*>(graph)->type = birch::POLYGONAL ;
+                break;
+            case '3':
+                dynamic_cast<birch::PieChart*>(graph)->type = birch::DONUT ;
+                std::cout << "Donut inner radius : ";
+                std::cin >> dynamic_cast<birch::PieChart*>(graph)->donut_radius ;
+                break;
+            }
+
             break ;
+            /*
 
         case '6':
             graph = new birch::RadarGraph({ 23, 45, 26, 36, 20, 14, 19, 31 }, 100);
@@ -134,6 +147,7 @@ void Demo()
         DrawOnScreen(graph); // this actually draws the screen
         std::cin.get();
         std::cin.get();
+
         // Clear screen
         for(int i = 0; i < 1000; ++i)
             std::cout << "\n" ;

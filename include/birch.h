@@ -5,7 +5,7 @@
 #include "bar.h"
 //#include "line.h"
 //#include "histogram.h"
-//#include "pie.h"
+#include "pie.h"
 //#include "radar.h"
 
 #endif

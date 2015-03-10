@@ -5,26 +5,31 @@
 
 namespace birch
 {
-    /*class PieChart : public DataGraph<PieChart>
+
+    enum ExplodeMode { NONE, LARGEST, ALL, SELECTIVE };
+    enum PieChartType { NORMAL, POLYGONAL, DONUT };
+
+    class PieChart : public GraphBase
 	{
     protected:
-		float radius ;
-		std::vector<sf::Color> colors ;
-		std::vector<float> data ;
-		sf::Vector2f center ;
-		bool polygonal ;
-		bool outline ;
+		float total ;
+		std::vector<DataElement> data ;
 
 	public:
-		PieChart(const std::initializer_list<float>& d, const std::initializer_list<sf::Color>& c)
-		: data{d}, colors{c}, radius{100}, polygonal{false}, outline{false} {};
-		PieChart(const std::initializer_list<float>& d)
-		: data{d}, radius{100}, polygonal{false}, outline{false} {}
+		PieChart(const std::vector<DataElement>&, ExplodeMode = LARGEST, PieChartType = NORMAL);
 
 		void render();
-		void setPolygonal(bool val) { polygonal = val; }
-		void setOutline(bool val) { outline = val; }
-	};*/
+
+		bool outline ;
+		unsigned int explode_sector ;
+		ExplodeMode explode_mode ;
+		PieChartType type ;
+		float radius ;
+		float donut_radius ;
+
+		sf::Vector2f center ;
+
+	};
 }
 
 #endif // __BIRCH_PIE_CHART__
