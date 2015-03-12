@@ -3,94 +3,6 @@
 
 namespace birch
 {
-
-    sf::RectangleShape MakeRect(sf::Vector2f first,
-                                sf::Vector2f second,
-                                float thickness)
-    {
-        FSTART;
-        sf::RectangleShape plot ;
-        float dist = std::sqrt((first.x - second.x)*(first.x - second.x) +
-                         (first.y - second.y)*(first.y - second.y));
-        plot.setSize(sf::Vector2f(dist, thickness));
-        if(first.y > second.y)
-            std::swap(first, second);
-        plot.setPosition(first);
-        plot.setOrigin(0, plot.getSize().y / 2);
-        float m = (second.y - first.y) / (second.x - first.x) ;
-        float angle = (180.0f / 3.1415f) * std::atan((m >= 0.0f) ? m : -m);
-        if((first.x - second.x) > 0.01f)
-           angle = 180.0f - angle ;
-        plot.rotate(angle);
-        FEND;
-        return plot ;
-    }
-
-    void DrawDottedLine(sf::RenderTarget* window,
-                        const sf::Vector2f& start,
-                        const sf::Vector2f& end,
-                        const sf::Color& color,
-                        float gap, float thickness)
-    {
-        FSTART;
-        float dist = std::sqrt((start.x - end.x)*(start.x - end.x) + (start.y - end.y)*(start.y - end.y));
-        float covered = 0.0f, ratio, x, y;
-        int   total_segments = dist / gap ;
-        bool  draw = true ;
-        sf::Vector2f first = start, second ;
-        covered = gap ;
-        for(int i = 0; i < total_segments; ++i)
-        {
-            if(draw)
-            {
-                ratio = covered / dist ;
-                x = start.x * (1.0f - ratio) + end.x * ratio;
-                y = start.y * (1.0f - ratio) + end.y * ratio;
-                second = sf::Vector2f(x, y);
-                sf::RectangleShape rect = MakeRect(first, second, thickness);
-                rect.setFillColor(color);
-                window->draw(rect);
-            }
-            else
-            {
-                ratio = covered / dist ;
-                x = start.x * (1.0f - ratio) + end.x * ratio;
-                y = start.y * (1.0f - ratio) + end.y * ratio;
-                first = sf::Vector2f(x, y);
-            }
-            draw = !draw ;
-            covered += gap ;
-        }
-
-        if((total_segments % 2 == 0) &&
-           ((dist / gap) > static_cast<float>(total_segments)))
-        {
-            sf::RectangleShape rect = MakeRect(first, end, thickness);
-            rect.setFillColor(color);
-            window->draw(rect);
-        }
-        FEND;
-    }
-
-    void SetTextAtCenter(sf::Text &text, float x, float y, float w, float h)
-    {
-        FSTART;
-        float offsetx = (w - text.getLocalBounds().width)/2.f ,
-              offsety = (h - text.getLocalBounds().height)/2.f ;
-        text.setPosition(sf::Vector2f(x + offsetx, y + offsety));
-        FEND;
-    }
-
-    sf::CircleShape PlotPoint(float x, float y, float r, const sf::Color& color)
-    {
-        FSTART;
-        sf::CircleShape cs{r};
-        cs.setPosition(sf::Vector2f(x, y));
-        cs.setFillColor(color);
-        FEND;
-        return cs ;
-    }
-
     unsigned int DigitCount(float val)
     {
         unsigned int dc = 0u ;
@@ -245,12 +157,12 @@ namespace birch
             }
             break;
         }
-
+        texture.setSmooth(true);
         texture.display();
         FEND;
     }
 
-    void GraphBase::createTexture()
+    void Chart::createTexture()
     {
         FSTART;
         if(legend.exists)
@@ -264,10 +176,11 @@ namespace birch
 
         screen_texture.create(screen_width, screen_height);
         screen_texture.clear(screen_bg_color);
+
         FEND;
     }
 
-    void GraphBase::drawAxes()
+    void Chart::drawAxes()
     {
         FSTART;
         sf::RectangleShape xaxis, yaxis ;
@@ -288,17 +201,19 @@ namespace birch
         FEND;
     }
 
-    void GraphBase::copyToScreen(sf::RenderWindow *window)
+    void Chart::copyToScreen(sf::RenderWindow *window)
     {
         FSTART;
         // background screen texture
         sf::Sprite bsprite;
+        screen_texture.setSmooth(true);
         screen_texture.display();
         bsprite.setTexture(screen_texture.getTexture());
         window->draw(bsprite);
 
         // foreground chart texture (adjust for margins)
         sf::Sprite csprite;
+        chart_texture.setSmooth(true);
         chart_texture.display();
         csprite.setTexture(chart_texture.getTexture());
         csprite.move(sf::Vector2f(screen_margins.left, screen_margins.top));
@@ -317,7 +232,7 @@ namespace birch
         FEND;
     }
 
-    void GraphBase::drawTextElements()
+    void Chart::drawTextElements()
     {
         FSTART;
         for(int i = 0; i < text_elements.size(); ++i)
@@ -325,7 +240,7 @@ namespace birch
         FEND;
     }
 
-    void GraphBase::loadFonts()
+    void Chart::loadFonts()
     {
         FSTART;
         axes.labels.font.loadFromFile("NotoSans.ttf");
@@ -333,7 +248,7 @@ namespace birch
         FEND;
     }
 
-    void GraphBase::drawToScreen(sf::RenderWindow* window)
+    void Chart::drawToScreen(sf::RenderWindow* window)
     {
         FSTART;
 
@@ -346,7 +261,7 @@ namespace birch
         FEND;
     }
 
-    void GraphBase::createLegendMetrics()
+    void Chart::createLegendMetrics()
     {
         FSTART;
 

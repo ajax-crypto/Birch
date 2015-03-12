@@ -3,7 +3,7 @@
 
 namespace birch
 {
-    BarGraph::BarGraph(const std::vector<DataElement>& d, bool al, bool dv) :
+    BarChart::BarChart(const std::vector<DataElement>& d, bool al, bool dv) :
     data{d}, gap{10}, display_values{dv}
     {
         FSTART;
@@ -19,7 +19,7 @@ namespace birch
         FEND;
     }
 
-    void BarGraph::render()
+    void BarChart::render()
     {
         FSTART;
         float x = chart_offsets.x/2.f + gap, y = chart_offsets.y/2.f ;
@@ -81,7 +81,7 @@ namespace birch
         FEND;
     }
 
-    MultiBarGraph::MultiBarGraph(const std::vector<std::vector<float>>& d1,
+    MultiBarChart::MultiBarChart(const std::vector<std::vector<float>>& d1,
                                  const std::vector<std::string>& d2,
                                  const std::vector<sf::Color>& d3)
     : multi_data{d1}, axes_labels{d2}, bar_colors{d3}, display_values{true}
@@ -101,7 +101,7 @@ namespace birch
         FEND;
     }
 
-    void MultiBarGraph::render()
+    void MultiBarChart::render()
     {
         FSTART;
         float x = chart_offsets.x/2.f, y = chart_offsets.y/2.f ;

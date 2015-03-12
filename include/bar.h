@@ -6,50 +6,50 @@
 namespace birch
 {
 
-    class BarGraph : public GraphBase
+    class BarChart : public Chart
     {
 
     protected:
-		std::vector<DataElement> data ;
-		sf::RectangleShape bar ;
+        std::vector<DataElement> data ;
+        sf::RectangleShape bar ;
 
-		float max ;
-		float width ;
-		float vsize ;
+        float max ;
+        float width ;
+        float vsize ;
 
-	public:
-		BarGraph(const std::vector<DataElement>&, bool = true, bool = true);
+    public:
+        BarChart(const std::vector<DataElement>&, bool = true, bool = true);
 
-		void render();
+        void render();
 
-		float gap ;
+        float gap ;
         bool  display_values ;
 
-	};
+    };
 
-	class MultiBarGraph : public GraphBase
-	{
+    class MultiBarChart : public Chart
+    {
 
     protected:
-		std::vector<std::vector<float>> multi_data ;
-		std::vector<std::string>        axes_labels ;
-		std::vector<sf::Color>          bar_colors;
+        std::vector<std::vector<float>> multi_data ;
+        std::vector<std::string>        axes_labels ;
+        std::vector<sf::Color>          bar_colors;
 
-		float max ;
-		float width ;
-		float vsize ;
+        float max ;
+        float width ;
+        float vsize ;
 
-	public:
+    public:
 
-		MultiBarGraph(const std::vector<std::vector<float>>&,
+        MultiBarChart(const std::vector<std::vector<float>>&,
                       const std::vector<std::string>&,
                       const std::vector<sf::Color>&);
 
-		void render();
+        void render();
 
         float gap ;
-		bool display_values ;
-	};
+        bool display_values ;
+    };
 
 }
 

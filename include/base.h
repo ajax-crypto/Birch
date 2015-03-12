@@ -1,7 +1,7 @@
 #ifndef __BIRCH_BASE__
 #define __BIRCH_BASE__
 
-#include <SFML/Graphics.hpp>
+#include "graphics.h"
 #include "log.h"
 #include <cmath>
 #include <vector>
@@ -14,23 +14,6 @@
 namespace birch
 {
 
-    enum Position { LEFT, RIGHT, TOP, BOTTOM };
-    enum Shape    { RECTANGULAR, CIRCULAR };
-    enum Orientation { HORIZONTAL, VERTICAL };
-
-    sf::RectangleShape MakeRect(sf::Vector2f,
-                                sf::Vector2f,
-                                float = 1.f);
-
-    void DrawDottedLine(sf::RenderTarget*,
-                        const sf::Vector2f&,
-                        const sf::Vector2f&,
-                        const sf::Color&,
-                        float = 3.f,
-                        float = 1.f);
-
-    void SetTextAtCenter(sf::Text&, float, float, float, float);
-    sf::CircleShape PlotPoint(float, float, float, const sf::Color&);
     unsigned int    DigitCount(float);
 
     struct DataFormat
@@ -65,33 +48,6 @@ namespace birch
         }
     };
 
-    /*class DrawingElement
-    {
-
-        sf::Shape*    drawable ;
-        sf::Text      text ;
-
-    public:
-        DrawingElement() {};
-
-        struct {
-            float top, bottom, left, right ;
-        } margins ;
-
-        struct {
-            float thickness ;
-            sf::Color color ;
-        } border;
-
-        float width, height ;
-
-        void setRectangleShape
-
-
-        sf::RenderTexture      texture ;
-
-    };*/
-
     class GraphLegendUnit
     {
 
@@ -114,7 +70,7 @@ namespace birch
         std::string getString() const { return text.getString(); }
 
         friend class GraphLegend ;
-        friend class GraphBase ;
+        friend class Chart ;
     };
 
     class GraphLegend
@@ -160,10 +116,10 @@ namespace birch
             float radius ;
         } shape ;
 
-        friend class GraphBase;
+        friend class Chart;
     };
 
-    class GraphBase
+    class Chart
     {
 
     protected:
@@ -208,7 +164,7 @@ namespace birch
 
         GraphLegend            legend ;
 
-        GraphBase() :
+        Chart() :
             screen_bg_color{sf::Color::White},
             chart_bg_color{sf::Color::White},
             chart_offsets{ 0.f, 0.f },
@@ -217,7 +173,7 @@ namespace birch
                 sf::Font()
             }} {};
 
-        GraphBase(const GraphBase&) = default ;
+        Chart(const Chart&) = default ;
 
         void setChartBackgroundColor(const sf::Color& c) { chart_bg_color = c; }
         void setScreenBackgroundColor(const sf::Color& c) { screen_bg_color = c; }

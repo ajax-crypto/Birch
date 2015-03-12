@@ -76,11 +76,11 @@ namespace birch
         for(const auto& d : data)
         {
             float temp = angle ;
-            angle += (d.value / total) * (2.f * 3.1415f) ;
+            angle += (d.value / total) * 360.f ;
             if(type == POLYGONAL)
             {
-                x = radius * std::cos(angle) + chart_offsets.x + center.x;
-                y = radius * std::sin(angle) + chart_offsets.y + center.y;
+                x = radius * std::cos(angle * a2r) + chart_offsets.x + center.x;
+                y = radius * std::sin(angle * a2r) + chart_offsets.y + center.y;
                 triangle[1].position = line[1].position ;
                 line[1].position = sf::Vector2f(x, y);
                 triangle[2].position = line[1].position ;
@@ -98,16 +98,10 @@ namespace birch
             }
             else
             {
-                while(temp <= angle)
-                {
-                    x = radius * std::cos(temp) + chart_offsets.x + center.x;
-                    y = radius * std::sin(temp) + chart_offsets.y + center.y;
-                    line[1].position = sf::Vector2f(x, y);
-                    line[0].color = d.color;
-                    line[1].color = d.color;
-                    chart_texture.draw(line);
-                    temp += 0.005f ;
-                }
+                SectorShape s{radius, (d.value / total) * 360.0f, center};
+                s.setFillColor(d.color);
+                s.rotate(temp);
+                chart_texture.draw(s);
             }
         }
         if(type == POLYGONAL)
@@ -118,7 +112,6 @@ namespace birch
             tshape.setFillColor(sf::Color::White);
             tshape.setPosition(line[0].position - sf::Vector2f(donut_radius, donut_radius));
             chart_texture.draw(tshape);
-            LOG("drawn donut");
         }
 
         FEND;

@@ -3,39 +3,42 @@
 #include <chrono>
 #include <cstdlib>
 
-void DrawOnScreen(birch::GraphBase* graph)
+void DrawOnScreen(birch::Chart* graph)
 {
     sf::ContextSettings settings ;
-	settings.antialiasingLevel = 8;
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Graph Plotting", sf::Style::Default, settings);
+    settings.antialiasingLevel = 8;
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Graph Plotting", sf::Style::Default, settings);
 
     graph->chart_offsets.x = 2 ;
-	graph->chart_offsets.y = 2 ;
-	graph->setDimensions(400, 300);
-	graph->screen_margins.top = 25 ;
-	graph->screen_margins.bottom = 25 ;
-	graph->screen_margins.left = 25 ;
-	graph->screen_margins.right = 25 ;
-	graph->setDefaultLegendMetrics();
+    graph->chart_offsets.y = 2 ;
+    graph->setDimensions(400, 300);
+    graph->screen_margins.top = 25 ;
+    graph->screen_margins.bottom = 25 ;
+    graph->screen_margins.left = 25 ;
+    graph->screen_margins.right = 25 ;
+    graph->setDefaultLegendMetrics();
 
-	window.clear(sf::Color(255, 255, 255));
-	graph->drawToScreen(&window);
-	window.display();
+    window.clear(sf::Color(255, 255, 255));
+    graph->drawToScreen(&window);
+    //birch::SectorShape s{70, 360, sf::Vector2f(100, 100)};
+    //s.setFillColor(sf::Color::Black);
+    //window.draw(s);
+    window.display();
 
-	while (window.isOpen())
+    while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-			else if(event.type == sf::Event::KeyPressed)
-				if(event.key.code == sf::Keyboard::Escape)
-					window.close();
+            else if(event.type == sf::Event::KeyPressed)
+                if(event.key.code == sf::Keyboard::Escape)
+                    window.close();
         }
-		//window.clear(sf::Color(255, 255, 255));
+        //window.clear(sf::Color(255, 255, 255));
         //window.display();
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 
@@ -43,9 +46,9 @@ void DrawOnScreen(birch::GraphBase* graph)
 void Demo()
 {
     char option ;
-    birch::GraphBase* graph ;
+    birch::Chart* graph ;
 
-	do
+    do
     {
         std::cout << "Which graph do you want to see ?\n";
         std::cout << "1. Bar Graph\n";
@@ -61,7 +64,7 @@ void Demo()
         switch(option)
         {
         case '1':
-            graph = new birch::BarGraph(std::vector<birch::DataElement>
+            graph = new birch::BarChart(std::vector<birch::DataElement>
                                         { birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
                                           birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
                                           birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
@@ -70,7 +73,7 @@ void Demo()
             break;
 
         case '2':
-            graph = new birch::MultiBarGraph(
+            graph = new birch::MultiBarChart(
                     { { 20, 20 }, { 35, 56 }, { 12, 17 }, { 23, 29 } },
                     { "AAA", "BBB", "CCC", "DDD" },
                     { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });
@@ -158,6 +161,6 @@ void Demo()
 int main()
 {
     std::thread t(Demo);
-	t.join();
+    t.join();
     return 0;
 }
