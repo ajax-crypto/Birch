@@ -6,6 +6,6 @@
 #include "line.h"
 //#include "histogram.h"
 #include "pie.h"
-//#include "radar.h"
+#include "radar.h"
 
 #endif

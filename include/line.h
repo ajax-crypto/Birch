@@ -5,7 +5,7 @@
 
 namespace birch
 {
-    class LineGraph : public Chart
+    class LineChart : public Chart
     {
     protected:
         std::vector<DataElement> data ;
@@ -21,8 +21,8 @@ namespace birch
         void drawAxisGuides(float, float);
 
     public:
-        LineGraph(std::vector<DataElement> const&);
-        LineGraph() {}
+        LineChart(std::vector<DataElement> const&);
+        LineChart() {}
 
         void render();
         sf::Color       anchor_color, guide_color, line_color ;
@@ -31,7 +31,7 @@ namespace birch
         bool  display_values ;
     };
 
-    class MultiLineGraph : public Chart
+    class MultiLineChart : public Chart
     {
         std::vector<std::vector<float>> data ;
         std::vector<sf::Color>          colors ;
@@ -51,7 +51,7 @@ namespace birch
         void drawAxisGuides(float, float, unsigned int);
 
     public:
-        MultiLineGraph(const std::vector<std::vector<float>>&,
+        MultiLineChart(const std::vector<std::vector<float>>&,
                        const std::vector<std::string>&,
                        const std::vector<sf::Color>&);
 

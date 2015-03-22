@@ -20,9 +20,6 @@ void DrawOnScreen(birch::Chart* graph)
 
     window.clear(sf::Color(255, 255, 255));
     graph->drawToScreen(&window);
-    birch::TriangleShape t{sf::Vector2f{100, 100}, sf::Vector2f{100, 200}, sf::Vector2f{200, 100}};
-    t.setFillColor(sf::Color::Black);
-    //window.draw(t);
     window.display();
 
     while (window.isOpen())
@@ -36,8 +33,6 @@ void DrawOnScreen(birch::Chart* graph)
                 if(event.key.code == sf::Keyboard::Escape)
                     window.close();
         }
-        //window.clear(sf::Color(255, 255, 255));
-        //window.display();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
@@ -100,7 +95,7 @@ void Demo()
             break;*/
 
         case '4':
-            graph = new birch::LineGraph({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
+            graph = new birch::LineChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
                                           birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
                                           birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
                                           birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) }
@@ -131,17 +126,22 @@ void Demo()
             }
 
             break ;
-            /*
+
 
         case '6':
-            graph = new birch::RadarGraph({ 23, 45, 26, 36, 20, 14, 19, 31 }, 100);
+            graph = new birch::RadarChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
+                                            birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
+                                            birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
+                                            birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) },
+                                            birch::DataElement{ 19, "EEE", sf::Color(120, 210, 214) }
+                                          }, 100);
             std::cout << "Plot line is dotted ? (y/n) ";
             std::cin >> option ;
-            dynamic_cast<birch::RadarGraph*>(graph)->makePlotLineDotted(option == 'y');
-            break;*/
+            dynamic_cast<birch::RadarChart*>(graph)->dotted_plot = option == 'y';
+            break;
 
         case '7':
-            graph = new birch::MultiLineGraph(
+            graph = new birch::MultiLineChart(
                     { { 20, 20 }, { 35, 56 }, { 12, 17 }, { 23, 29 } },
                     { "AAA", "BBB", "CCC", "DDD" },
                     { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });

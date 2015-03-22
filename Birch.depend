@@ -1,15 +1,16 @@
 # depslib dependency file v1.0
-1427008527 source:f:\code\c++\birch\main.cpp
+1427011695 source:f:\code\c++\birch\main.cpp
 	"include\birch.h"
 	<thread>
 	<chrono>
 	<cstdlib>
 
-1426854075 f:\code\c++\birch\include\birch.h
+1427011430 f:\code\c++\birch\include\birch.h
 	"base.h"
 	"bar.h"
 	"line.h"
 	"pie.h"
+	"radar.h"
 
 1426191757 f:\code\c++\birch\include\base.h
 	"graphics.h"
@@ -369,7 +370,7 @@
 1424967311 f:\code\c++\birch\include\histogram.h
 	"base.h"
 
-1427008426 source:f:\code\c++\birch\src\line.cpp
+1427010427 source:f:\code\c++\birch\src\line.cpp
 	"..\include\line.h"
 
 1427005629 f:\code\c++\birch\include\line.h
@@ -381,10 +382,10 @@
 1426184682 f:\code\c++\birch\include\pie.h
 	"base.h"
 
-1425402523 source:f:\code\c++\birch\src\radar.cpp
+1427011528 source:f:\code\c++\birch\src\radar.cpp
 	"..\include\radar.h"
 
-1424967522 f:\code\c++\birch\include\radar.h
+1427011292 f:\code\c++\birch\include\radar.h
 	"base.h"
 
 1426868774 f:\code\c++\birch\include\log.h

@@ -3,7 +3,7 @@
 
 namespace birch
 {
-    LineGraph::LineGraph(std::vector<DataElement> const& d)
+    LineChart::LineChart(std::vector<DataElement> const& d)
     : data{d}, anchor_size{8}, anchor_color{sf::Color(88, 172, 250)},
       hguide{true}, vguide{true}, guide_color{sf::Color(100, 100, 100)},
       line_color{sf::Color::Black}, gap{0.0f}, start_pos{0.0f},
@@ -22,7 +22,7 @@ namespace birch
         FEND ;
     }
 
-    void LineGraph::drawAxisAnchors(float x, float y)
+    void LineChart::drawAxisAnchors(float x, float y)
     {
         FSTART;
         if(yaxis_guide)
@@ -42,7 +42,7 @@ namespace birch
         FEND;
     }
 
-    void LineGraph::drawAxisGuides(float x, float y)
+    void LineChart::drawAxisGuides(float x, float y)
     {
         FSTART;
         if(vguide)
@@ -54,7 +54,7 @@ namespace birch
         FEND;
     }
 
-    void LineGraph::drawValueAnchor(float x, float y, const sf::Color& fill)
+    void LineChart::drawValueAnchor(float x, float y, const sf::Color& fill)
     {
         FSTART;
         anchor.setPosition(sf::Vector2f(x - anchor_size, y - anchor_size));
@@ -64,7 +64,7 @@ namespace birch
         FEND;
     }
 
-    void LineGraph::render()
+    void LineChart::render()
     {
         FSTART;
         float x = chart_offsets.x/2.f + gap, y = chart_offsets.y/2.f ;
@@ -142,7 +142,7 @@ namespace birch
         FEND;
     }
 
-    MultiLineGraph::MultiLineGraph(const std::vector<std::vector<float>>& d,
+    MultiLineChart::MultiLineChart(const std::vector<std::vector<float>>& d,
                                    const std::vector<std::string>& n,
                                    const std::vector<sf::Color>& c)
     : data{d}, colors{c}, axes_labels{n}, hguide{true}, vguide{true}, gap{0.0f},
@@ -164,7 +164,7 @@ namespace birch
         FEND;
     }
 
-    void MultiLineGraph::drawAxisAnchors(float x, float y, unsigned int index)
+    void MultiLineChart::drawAxisAnchors(float x, float y, unsigned int index)
     {
         FSTART;
         anchor.setRadius(anchor_size[index]/2);
@@ -184,7 +184,7 @@ namespace birch
         FEND;
     }
 
-    void MultiLineGraph::drawAxisGuides(float x, float y, unsigned int index)
+    void MultiLineChart::drawAxisGuides(float x, float y, unsigned int index)
     {
         FSTART;
         if(vguide)
@@ -197,7 +197,7 @@ namespace birch
         FEND;
     }
 
-    void MultiLineGraph::drawValueAnchor(float x, float y, unsigned int index)
+    void MultiLineChart::drawValueAnchor(float x, float y, unsigned int index)
     {
         FSTART;
         anchor.setPosition(sf::Vector2f(x - anchor_size[index], y - anchor_size[index]));
@@ -207,7 +207,7 @@ namespace birch
         FEND;
     }
 
-    void MultiLineGraph::render()
+    void MultiLineChart::render()
     {
         FSTART;
         float x, y = chart_offsets.y/2, item ;
