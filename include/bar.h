@@ -23,6 +23,8 @@ namespace birch
         void render();
 
         float gap ;
+        unsigned int guides ;
+        bool  display_guides ;
         bool  display_values ;
 
     };
@@ -48,7 +50,9 @@ namespace birch
         void render();
 
         float gap ;
-        bool display_values ;
+        unsigned int guides ;
+        bool  display_guides ;
+        bool  display_values ;
     };
 
 }

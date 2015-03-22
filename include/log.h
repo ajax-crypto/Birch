@@ -9,7 +9,7 @@
 #define  LOG(X) std::cout << "[" << __LINE__ << "] " << __PRETTY_FUNCTION__ << " : "  << X << std::endl ;
 #define  FSTART LOG("entered")
 #define  FEND   LOG("finished")
-#define  L(X)   std::cout << "\t" << X << std::endl
+#define  L(X)   std::cout << "\n\t" << X << "\n" << std::endl
 
 namespace birch
 {

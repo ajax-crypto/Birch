@@ -20,9 +20,9 @@ void DrawOnScreen(birch::Chart* graph)
 
     window.clear(sf::Color(255, 255, 255));
     graph->drawToScreen(&window);
-    //birch::SectorShape s{70, 360, sf::Vector2f(100, 100)};
-    //s.setFillColor(sf::Color::Black);
-    //window.draw(s);
+    birch::TriangleShape t{sf::Vector2f{100, 100}, sf::Vector2f{100, 200}, sf::Vector2f{200, 100}};
+    t.setFillColor(sf::Color::Black);
+    //window.draw(t);
     window.display();
 
     while (window.isOpen())
@@ -97,11 +97,15 @@ void Demo()
                       sf::Color(102, 51, 0),
                       sf::Color(255, 255, 0)
                     });
-            break;
+            break;*/
 
         case '4':
-            graph = new birch::LineGraph({ 23, 45, 18, 16, 33 });
-            break;*/
+            graph = new birch::LineGraph({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
+                                          birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
+                                          birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
+                                          birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) }
+                                        });
+            break;
 
         case '5':
             graph = new birch::PieChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
@@ -134,14 +138,16 @@ void Demo()
             std::cout << "Plot line is dotted ? (y/n) ";
             std::cin >> option ;
             dynamic_cast<birch::RadarGraph*>(graph)->makePlotLineDotted(option == 'y');
-            break;
+            break;*/
 
         case '7':
             graph = new birch::MultiLineGraph(
-                    { { 20, 20 }, { 35, 56 }, { 17, 12 }, { 23, 29 } },
+                    { { 20, 20 }, { 35, 56 }, { 12, 17 }, { 23, 29 } },
+                    { "AAA", "BBB", "CCC", "DDD" },
                     { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });
-            break ;
-        */
+            graph->legend.addData({ { "AAAA", sf::Color(50, 200, 50) }, { "BBBB", sf::Color(50, 50, 200) } });
+            break;
+
         default:
             return;
         }

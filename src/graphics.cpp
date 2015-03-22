@@ -7,7 +7,7 @@ namespace birch
                                 sf::Vector2f second,
                                 float thickness)
     {
-        FSTART;
+        //FSTART;
         sf::RectangleShape plot ;
         float dist = std::sqrt((first.x - second.x)*(first.x - second.x) +
                          (first.y - second.y)*(first.y - second.y));
@@ -15,13 +15,13 @@ namespace birch
         if(first.y > second.y)
             std::swap(first, second);
         plot.setPosition(first);
-        plot.setOrigin(0, plot.getSize().y / 2);
+        plot.setOrigin(0.f, plot.getSize().y / 2.f);
         float m = (second.y - first.y) / (second.x - first.x) ;
         float angle = (180.0f / 3.1415f) * std::atan((m >= 0.0f) ? m : -m);
         if((first.x - second.x) > 0.01f)
            angle = 180.0f - angle ;
         plot.rotate(angle);
-        FEND;
+        //FEND;
         return plot ;
     }
 
@@ -43,8 +43,8 @@ namespace birch
             if(draw)
             {
                 ratio = covered / dist ;
-                x = start.x * (1.0f - ratio) + end.x * ratio;
-                y = start.y * (1.0f - ratio) + end.y * ratio;
+                x = start.x*(1.0f - ratio) + end.x*ratio;
+                y = start.y*(1.0f - ratio) + end.y*ratio;
                 second = sf::Vector2f(x, y);
                 sf::RectangleShape rect = MakeRect(first, second, thickness);
                 rect.setFillColor(color);
@@ -53,8 +53,8 @@ namespace birch
             else
             {
                 ratio = covered / dist ;
-                x = start.x * (1.0f - ratio) + end.x * ratio;
-                y = start.y * (1.0f - ratio) + end.y * ratio;
+                x = start.x*(1.0f - ratio) + end.x*ratio;
+                y = start.y*(1.0f - ratio) + end.y*ratio;
                 first = sf::Vector2f(x, y);
             }
             draw = !draw ;

@@ -4,7 +4,7 @@
 namespace birch
 {
     BarChart::BarChart(const std::vector<DataElement>& d, bool al, bool dv) :
-    data{d}, gap{10}, display_values{dv}
+    data{d}, gap{10}, display_values{dv}, guides{true}
     {
         FSTART;
         max = (*std::max_element(data.begin(), data.end())).value;
@@ -26,6 +26,7 @@ namespace birch
         float ratio = (chart_height - 2.f*chart_offsets.y - vsize) / max;
         float item;
         sf::Text   text, values ;
+        sf::RectangleShape guide_lines ;
 
         width = (chart_width - 2.f*chart_offsets.x - gap*static_cast<float>(data.size()))
             / static_cast<float>(data.size()) ;
@@ -42,6 +43,17 @@ namespace birch
         {
             values.setFont(axes.labels.font);
             values.setCharacterSize(vsize);
+        }
+
+        if(guides)
+        {
+            float incrs = max/static_cast<float>(guides);
+            float x1 = x, y1 = chart_height - axes.labels.font_size ,
+                  x2 = x + chart_width, y2 ;
+            for(auto i = 0u; i < guides; ++i)
+            {
+                DrawDottedLine(&chart_texture, sf::Vector2f(x, y), sf::Vector2f(x, y), sf::Color(69, 69, 69));
+            }
         }
 
         for(auto& d : data)

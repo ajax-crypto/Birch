@@ -3,10 +3,8 @@
 
 #include "graphics.h"
 #include "log.h"
-#include <cmath>
 #include <vector>
 #include <algorithm>
-#include <tuple>
 #include <string>
 #include <cassert>
 #include <iomanip>

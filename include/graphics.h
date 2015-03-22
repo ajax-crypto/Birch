@@ -50,6 +50,19 @@ namespace birch
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     };
+
+    class TriangleShape : public sf::Shape
+    {
+        sf::Vector2f vertex[3];
+
+    public:
+        TriangleShape(const sf::Vector2f v1, const sf::Vector2f v2, const sf::Vector2f v3)
+        :   vertex{ v1, v2, v3 } {}
+
+        virtual unsigned int getPointCount() const { return 3u; }
+        virtual sf::Vector2f getPoint(unsigned int index) const { return vertex[index]; }
+
+    };
 }
 
 #endif // __BIRCH_GRAPHICS__

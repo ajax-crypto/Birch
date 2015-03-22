@@ -3,7 +3,7 @@
 
 #include "base.h"
 #include "bar.h"
-//#include "line.h"
+#include "line.h"
 //#include "histogram.h"
 #include "pie.h"
 //#include "radar.h"
