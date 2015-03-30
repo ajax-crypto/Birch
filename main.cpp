@@ -11,7 +11,7 @@ void DrawOnScreen(birch::Chart* graph)
 
     graph->chart_offsets.x = 2 ;
     graph->chart_offsets.y = 2 ;
-    graph->setDimensions(400, 300);
+    graph->setDimensions(700, 500);
     graph->screen_margins.top = 25 ;
     graph->screen_margins.bottom = 25 ;
     graph->screen_margins.left = 25 ;
@@ -53,7 +53,8 @@ void Demo()
         std::cout << "5. Pie Chart\n";
         std::cout << "6. Radar Graph\n";
         std::cout << "7. Multi Line Graph\n";
-        std::cout << "Enter your option [1-6] : ";
+        std::cout << "8. Column Graph\n";
+        std::cout << "Enter your option [1-8] : ";
         std::cin >> option ;
 
         switch(option)
@@ -98,7 +99,9 @@ void Demo()
             graph = new birch::LineChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
                                           birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
                                           birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
-                                          birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) }
+                                          birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) },
+                                          birch::DataElement{ 28, "EE", sf::Color(250, 111, 214) },
+                                          birch::DataElement{ 7, "F", sf::Color(150, 111, 114) }
                                         });
             break;
 
@@ -145,7 +148,20 @@ void Demo()
                     { { 20, 20 }, { 35, 56 }, { 12, 17 }, { 23, 29 } },
                     { "AAA", "BBB", "CCC", "DDD" },
                     { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });
+            dynamic_cast<birch::MultiLineChart*>(graph)->setFillColor(0, sf::Color::Red);
+            dynamic_cast<birch::MultiLineChart*>(graph)->setFillColor(1, sf::Color::Green);
             graph->legend.addData({ { "AAAA", sf::Color(50, 200, 50) }, { "BBBB", sf::Color(50, 50, 200) } });
+            break;
+
+        case '8':
+            graph = new birch::ColumnChart(
+                    { { 20, 20, 35 }, { 35, 56, 21 }, { 12, 17, 19 }, { 23, 29, 11 } },
+                    { "AAA", "BBB", "CCC", "DDD" },
+                    { sf::Color{50, 200, 5}, sf::Color{50, 50, 200}, sf::Color{200, 50, 50} });
+            graph->legend.addData({ { "AAAA", sf::Color{50, 200, 50} },
+                                    { "BBBB", sf::Color{50, 50, 200} },
+                                    { "CCCC", sf::Color{200, 50, 50} },
+                                  });
             break;
 
         default:

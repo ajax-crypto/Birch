@@ -8,7 +8,7 @@ namespace birch
       hguide{true}, vguide{true}, guide_color{sf::Color(100, 100, 100)},
       line_color{sf::Color::Black}, gap{0.0f}, start_pos{0.0f},
       yaxis_guide{true}, xaxis_guide{true}, line_thickness{2},
-      display_values{true}, display_guides{true}
+      display_values{true}, display_guides{true}, fill_color{sf::Color::Cyan}
     {
         FSTART;
         max = (*std::max_element(d.begin(), d.end())).value ;
@@ -64,23 +64,52 @@ namespace birch
         FEND;
     }
 
-    void LineChart::render()
+    void LineChart::drawFillPolygon(float ratio, float gap)
     {
         FSTART;
-        float x = chart_offsets.x/2.f + gap, y = chart_offsets.y/2.f ;
-        float ratio = (chart_height - chart_offsets.y - anchor_size) / max;
-        float item = data[0].value;
+        if(fill)
+        {
+            sf::Vector2f point ;
+            sf::ConvexShape fill_shape ;
+            float item,
+                  x = chart_offsets.x/2.f,
+                  y = chart_offsets.y/2.f ;
+            auto i = 0u ;
+
+            fill_shape.setPointCount(2u + data.size());
+            fill_shape.setPoint(0, sf::Vector2f(0, chart_height - axes.labels.font_size));
+
+            for(; i < data.size(); ++i)
+            {
+                item = data[i].value * ratio ;
+                point = sf::Vector2f(x, chart_height - y - item);
+                fill_shape.setPoint(i + 1u, point);
+                x += gap ;
+            }
+
+            fill_shape.setPoint(i + 1u, sf::Vector2f(x - gap, chart_height - axes.labels.font_size));
+            fill_shape.setFillColor(fill_color);
+            chart_texture.draw(fill_shape);
+        }
+        FEND;
+    }
+
+    void LineChart::render()
+    {
+        FSTART
+        unsigned int index = 1 ;
+        float x = chart_offsets.x/2.f, y = chart_offsets.y/2.f ;
+        float ratio = (chart_height - chart_offsets.y -
+                       anchor_size - 1.2f*axes.labels.font_size) / max;
+        float item  ;
         gap = (chart_width - chart_offsets.x) / data.size();
         float width = (chart_width - 2.f*chart_offsets.x - gap*static_cast<float>(data.size()))
             / static_cast<float>(data.size()) ;
         sf::RectangleShape line ;
         sf::Vector2f first, second ;
         sf::Text   text, values ;
-        item *= ratio ;
-        first = sf::Vector2f(x, chart_height - y - item);
-        if(start_pos > 0.0f)
-            drawAxisGuides(first.x, first.y);
-        drawAxisAnchors(first.x, first.y);
+
+        fill = true ;
 
         if(!legend.exists)
         {
@@ -95,10 +124,11 @@ namespace birch
             values.setCharacterSize(axes.labels.font_size);
         }
 
-        for(auto& d : data)
+        drawFillPolygon(ratio, gap);
+
+        for(auto i = 0u; i < data.size(); ++i)
         {
-            item = d.value * ratio ;
-            x += gap ;
+            item = data[i].value * ratio ;
             second = sf::Vector2f(x, chart_height - y - item);
             line = MakeRect(first, second, line_thickness);
             line.setFillColor(line_color);
@@ -106,7 +136,7 @@ namespace birch
             first = second ;
             if(!legend.exists)
             {
-                text.setString(d.name);
+                text.setString(data[i].name);
                 SetTextAtCenter(text, x, chart_height - y - 1.2f*axes.labels.font_size,
                                 width + gap, axes.labels.font_size);
                 text.move(sf::Vector2f(-gap/2.f, 0.f));
@@ -115,29 +145,35 @@ namespace birch
 
             if(display_values)
             {
-                values.setColor(d.color);
+                values.setColor(data[i].color);
                 values.setString([&](){
                         std::ostringstream temp ;
-                        temp << std::setprecision(2) << d.value ;
+                        temp << std::setprecision(2) << data[i].value ;
                         return temp.str();
                     }());
                 SetTextAtCenter(values, x, chart_height - y - item - axes.labels.font_size/2.f,
                                 width + gap, axes.labels.font_size);
                 values.move(sf::Vector2f(-gap/2.f, -anchor_size -axes.labels.font_size));
-                std::string v = values.getString();
+                if(i == 0u)
+                    values.move(sf::Vector2f(values.getString().getSize()*axes.labels.font_size/2.f, 0.f));
                 chart_texture.draw(values);
             }
-            drawAxisGuides(first.x, first.y);
+
+            if(i != 0u)
+                drawAxisGuides(first.x, first.y);
             drawAxisAnchors(first.x, first.y);
+
+            x += gap ;
         }
 
-        x = chart_offsets.x/2.f + gap;
+        x = chart_offsets.x/2.f;
         for(auto& d : data)
         {
             item = d.value * ratio ;
             drawValueAnchor(x, chart_height - y - item, d.color);
             x += gap ;
         }
+
         drawAxes();
         FEND;
     }
@@ -159,6 +195,7 @@ namespace birch
         }
         line_color = std::vector<sf::Color>(data[0].size(), sf::Color::Black);
         guide_color = std::vector<sf::Color>(data[0].size(), sf::Color::Black);
+        fill_color = std::vector<sf::Color>(data[0].size(), sf::Color::Transparent);
         anchor_size = std::vector<float>(data[0].size(), 8.f);
         line_thickness = std::vector<float>(data[0].size(), 2.f);
         FEND;
@@ -207,6 +244,41 @@ namespace birch
         FEND;
     }
 
+    void MultiLineChart::drawFillPolygon(float ratio, float gap)
+    {
+        FSTART;
+        if(fill)
+        {
+            for(auto i = 0u; i < data[0].size(); ++i)
+            {
+                sf::Vector2f point ;
+                sf::ConvexShape fill_shape ;
+                float item,
+                      x = chart_offsets.x/2.f,
+                      y = chart_offsets.y/2.f ;
+                auto j = 0u ;
+
+                fill_shape.setPointCount(2u + data.size());
+                fill_shape.setPoint(0, sf::Vector2f(0, chart_height - axes.labels.font_size));
+
+                for(; j < data.size(); ++j)
+                {
+                    item = data[j][i] * ratio ;
+                    point = sf::Vector2f(x, chart_height - y - item);
+                    fill_shape.setPoint(j + 1u, point);
+                    x += gap ;
+
+                    L(data[j][i] << " === " << point);
+                }
+
+                fill_shape.setPoint(j + 1u, sf::Vector2f(x - gap, chart_height - axes.labels.font_size));
+                fill_shape.setFillColor(fill_color[i]);
+                chart_texture.draw(fill_shape);
+            }
+        }
+        FEND;
+    }
+
     void MultiLineChart::render()
     {
         FSTART;
@@ -224,6 +296,9 @@ namespace birch
         text.setCharacterSize(axes.labels.font_size);
 
         gap = (chart_width - chart_offsets.x) / data.size();
+        fill = true ;
+        drawFillPolygon(ratio, gap);
+
         for(j = 0; j < data[0].size(); ++j)
         {
             x = chart_offsets.x/2 ;

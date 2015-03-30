@@ -55,6 +55,29 @@ namespace birch
         bool  display_values ;
     };
 
+    class ColumnChart : public Chart
+    {
+        protected:
+        std::vector<std::vector<float>> multi_data ;
+        std::vector<std::string>        axes_labels ;
+        std::vector<sf::Color>          bar_colors;
+
+        float max ;
+        float width ;
+
+    public:
+
+        ColumnChart(const std::vector<std::vector<float>>&,
+                    const std::vector<std::string>&,
+                    const std::vector<sf::Color>&);
+
+        void render();
+
+        float gap ;
+        unsigned int guides ;
+        bool  display_guides ;
+    };
+
 }
 
 #endif // __BIRCH_BAR_GRAPH__

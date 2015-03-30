@@ -171,4 +171,63 @@ namespace birch
         FEND;
     }
 
+    ColumnChart::ColumnChart(const std::vector<std::vector<float>>& d1,
+                             const std::vector<std::string>& d2,
+                             const std::vector<sf::Color>& d3)
+    : multi_data{d1}, axes_labels{d2}, bar_colors{d3}, gap{10}
+    {
+        FSTART;
+        assert(d1.size() == d2.size());
+        assert(d1[0].size() == d3.size());
+
+        float temp ;
+        max = 0 ;
+        for(int i = 1; i < d1.size(); ++i)
+        {
+            temp = std::accumulate(d1[i].begin(), d1[i].end(), 0);
+            if(temp > max)
+                max = temp ;
+        }
+        FEND;
+    }
+
+    void ColumnChart::render()
+    {
+        FSTART;
+        float x = chart_offsets.x/2.f + gap, y = chart_offsets.y/2.f ;
+        float ratio = (chart_height - 2.f*chart_offsets.y - axes.labels.font_size) / max;
+        float item;
+        sf::Text   text ;
+        sf::RectangleShape guide_lines, bar ;
+
+        width = (chart_width - 2.f*chart_offsets.x - gap*static_cast<float>(multi_data.size()))
+            / static_cast<float>(multi_data.size()) ;
+
+        text.setFont(axes.labels.font);
+        text.setColor(axes.labels.font_color);
+        text.setCharacterSize(axes.labels.font_size);
+
+        for(int i = 0; i < multi_data.size(); ++i)
+        {
+            x += gap ;
+            text.setString(axes_labels[i]);
+            SetTextAtCenter(text, x, chart_height - y - 1.2f*axes.labels.font_size,
+                width + gap, axes.labels.font_size);
+            chart_texture.draw(text);
+            for(int j = 0; j < multi_data[i].size(); ++j)
+            {
+                item = multi_data[i][j] * ratio ;
+                bar.setPosition(x, chart_height - y - item);
+                bar.setSize(sf::Vector2f(width, item - axes.labels.font_size));
+                bar.setFillColor(bar_colors[j]);
+                chart_texture.draw(bar);
+                y += item - axes.labels.font_size ;
+            }
+            x += width ;
+            y = chart_offsets.y/2.f ;
+        }
+        drawAxes();
+        FEND;
+    }
+
 }
