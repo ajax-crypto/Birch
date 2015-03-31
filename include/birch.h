@@ -7,5 +7,6 @@
 //#include "histogram.h"
 #include "pie.h"
 #include "radar.h"
+#include "bubble.h"
 
 #endif

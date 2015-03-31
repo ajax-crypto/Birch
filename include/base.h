@@ -46,6 +46,19 @@ namespace birch
         }
     };
 
+    struct Triplet : public DataFormat
+    {
+        float       value, x, y ;
+
+        Triplet(const std::string& n, const sf::Color& c, float v, float _x, float _y)
+        : DataFormat{n, c}, value{v}, x{_x}, y{_y} {}
+
+        bool operator<(const Triplet& e) const
+        {
+            return value < e.value ;
+        }
+    };
+
     class GraphLegendUnit
     {
 

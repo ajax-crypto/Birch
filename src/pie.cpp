@@ -108,9 +108,9 @@ namespace birch
             chart_texture.draw(pline);
         else if(type == DONUT)
         {
-            sf::CircleShape tshape(donut_radius);
+            sf::CircleShape tshape{donut_radius};
             tshape.setFillColor(sf::Color::White);
-            tshape.setPosition(line[0].position - sf::Vector2f(donut_radius, donut_radius));
+            tshape.setPosition(line[0].position - sf::Vector2f{donut_radius, donut_radius});
             chart_texture.draw(tshape);
         }
 

@@ -38,6 +38,7 @@
 		<Unit filename="include/bar.h" />
 		<Unit filename="include/base.h" />
 		<Unit filename="include/birch.h" />
+		<Unit filename="include/bubble.h" />
 		<Unit filename="include/graphics.h" />
 		<Unit filename="include/histogram.h" />
 		<Unit filename="include/line.h" />
@@ -47,6 +48,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/bar.cpp" />
 		<Unit filename="src/base.cpp" />
+		<Unit filename="src/bubble.cpp" />
 		<Unit filename="src/graphics.cpp" />
 		<Unit filename="src/histogram.cpp" />
 		<Unit filename="src/line.cpp" />

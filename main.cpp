@@ -30,7 +30,8 @@ void DrawOnScreen(birch::Chart* graph)
             if (event.type == sf::Event::Closed)
                 window.close();
             else if(event.type == sf::Event::KeyPressed)
-                if(event.key.code == sf::Keyboard::Escape)
+                if(event.key.code == sf::Keyboard::Escape ||
+                   event.key.code == sf::Keyboard::Return)
                     window.close();
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -54,7 +55,8 @@ void Demo()
         std::cout << "6. Radar Graph\n";
         std::cout << "7. Multi Line Graph\n";
         std::cout << "8. Column Graph\n";
-        std::cout << "Enter your option [1-8] : ";
+        std::cout << "9. Bubble Chart\n";
+        std::cout << "Enter your option [1-9] : ";
         std::cin >> option ;
 
         switch(option)
@@ -137,7 +139,8 @@ void Demo()
                                             birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
                                             birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) },
                                             birch::DataElement{ 19, "EEE", sf::Color(120, 210, 214) }
-                                          }, 100);
+                                          }, 200.f);
+            dynamic_cast<birch::RadarChart*>(graph)->point_radius = 10.f ;
             std::cout << "Plot line is dotted ? (y/n) ";
             std::cin >> option ;
             dynamic_cast<birch::RadarChart*>(graph)->dotted_plot = option == 'y';
@@ -145,12 +148,13 @@ void Demo()
 
         case '7':
             graph = new birch::MultiLineChart(
-                    { { 20, 20 }, { 35, 56 }, { 12, 17 }, { 23, 29 } },
-                    { "AAA", "BBB", "CCC", "DDD" },
+                    { { 13, 20 }, { 24, 56 }, { 12, 37 }, { 23, 29 }, { 11, 14 }, { 24, 18 } },
+                    { "0", "1", "2", "3", "4", "5" },
                     { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });
             dynamic_cast<birch::MultiLineChart*>(graph)->setFillColor(0, sf::Color::Red);
             dynamic_cast<birch::MultiLineChart*>(graph)->setFillColor(1, sf::Color::Green);
-            graph->legend.addData({ { "AAAA", sf::Color(50, 200, 50) }, { "BBBB", sf::Color(50, 50, 200) } });
+            graph->legend.addData({ { "Walking", sf::Color(50, 200, 50) },
+                                    { "Abnormal", sf::Color(50, 50, 200) } });
             break;
 
         case '8':
@@ -162,6 +166,13 @@ void Demo()
                                     { "BBBB", sf::Color{50, 50, 200} },
                                     { "CCCC", sf::Color{200, 50, 50} },
                                   });
+            break;
+
+        case '9':
+            graph = new birch::BubbleChart({ { "AAA", sf::Color{50, 50, 200}, 23.f, 100.f, 65.f },
+                                             { "BBB", sf::Color{50, 200, 50}, 32.f, 200.f, 35.f },
+                                             { "CCC", sf::Color{200, 50, 50}, 19.f, 300.f, 100.f }
+                                           });
             break;
 
         default:

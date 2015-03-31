@@ -77,13 +77,14 @@ namespace birch
             auto i = 0u ;
 
             fill_shape.setPointCount(2u + data.size());
-            fill_shape.setPoint(0, sf::Vector2f(0, chart_height - axes.labels.font_size));
+            fill_shape.setPoint(0, sf::Vector2f{0, chart_height - axes.labels.font_size});
 
             for(; i < data.size(); ++i)
             {
                 item = data[i].value * ratio ;
-                point = sf::Vector2f(x, chart_height - y - item);
+                point = sf::Vector2f{x, chart_height - y - item};
                 fill_shape.setPoint(i + 1u, point);
+                L("Polygon : " << point);
                 x += gap ;
             }
 
@@ -130,6 +131,7 @@ namespace birch
         {
             item = data[i].value * ratio ;
             second = sf::Vector2f(x, chart_height - y - item);
+            L("Line : " << second);
             line = MakeRect(first, second, line_thickness);
             line.setFillColor(line_color);
             chart_texture.draw(line);

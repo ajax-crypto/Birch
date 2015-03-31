@@ -1,18 +1,19 @@
 # depslib dependency file v1.0
-1427726500 source:f:\code\c++\birch\main.cpp
+1427800252 source:f:\code\c++\birch\main.cpp
 	"include\birch.h"
 	<thread>
 	<chrono>
 	<cstdlib>
 
-1427726308 f:\code\c++\birch\include\birch.h
+1427799779 f:\code\c++\birch\include\birch.h
 	"base.h"
 	"bar.h"
 	"line.h"
 	"pie.h"
 	"radar.h"
+	"bubble.h"
 
-1426191757 f:\code\c++\birch\include\base.h
+1427800220 f:\code\c++\birch\include\base.h
 	"graphics.h"
 	"log.h"
 	<vector>
@@ -370,13 +371,13 @@
 1424967311 f:\code\c++\birch\include\histogram.h
 	"base.h"
 
-1427388264 source:f:\code\c++\birch\src\line.cpp
+1427797716 source:f:\code\c++\birch\src\line.cpp
 	"..\include\line.h"
 
 1427382652 f:\code\c++\birch\include\line.h
 	"base.h"
 
-1426182255 source:f:\code\c++\birch\src\pie.cpp
+1427798510 source:f:\code\c++\birch\src\pie.cpp
 	"..\include\pie.h"
 
 1426184682 f:\code\c++\birch\include\pie.h
@@ -404,4 +405,10 @@
 
 1426868696 source:f:\code\c++\birch\src\graphics.cpp
 	"../include/graphics.h"
+
+1427798401 source:f:\code\c++\birch\src\bubble.cpp
+	"../include/bubble.h"
+
+1427799769 f:\code\c++\birch\include\bubble.h
+	"base.h"
 
