@@ -55,7 +55,7 @@ namespace birch
         bool  display_values ;
     };
 
-    class ColumnChart : public Chart
+    class StackedBarChart : public Chart
     {
         protected:
         std::vector<std::vector<float>> multi_data ;
@@ -67,7 +67,7 @@ namespace birch
 
     public:
 
-        ColumnChart(const std::vector<std::vector<float>>&,
+        StackedBarChart(const std::vector<std::vector<float>>&,
                     const std::vector<std::string>&,
                     const std::vector<sf::Color>&);
 

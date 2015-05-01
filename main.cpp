@@ -108,10 +108,10 @@ void Demo()
             break;
 
         case '5':
-            graph = new birch::PieChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
-                                          birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
-                                          birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
-                                          birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) }
+            graph = new birch::PieChart({ birch::DataElement{ 23, "AAA", sf::Color{255, 105, 97} },
+                                          birch::DataElement{ 14, "BBB", sf::Color{255, 179, 71} },
+                                          birch::DataElement{ 33, "CCC", sf::Color{119, 190, 119} },
+                                          birch::DataElement{ 12, "DDD", sf::Color{150, 111, 214} }
                                         });
             std::cout << "Pie chart type : (1 = Normal, 2 = Polygonal, 3 = Donut) ";
             std::cin >> option ;
@@ -134,11 +134,11 @@ void Demo()
 
 
         case '6':
-            graph = new birch::RadarChart({ birch::DataElement{ 23, "AAA", sf::Color(255, 105, 97) },
-                                            birch::DataElement{ 14, "BBB", sf::Color(255, 179, 71) },
-                                            birch::DataElement{ 33, "CCC", sf::Color(119, 190, 119) },
-                                            birch::DataElement{ 12, "DDD", sf::Color(150, 111, 214) },
-                                            birch::DataElement{ 19, "EEE", sf::Color(120, 210, 214) }
+            graph = new birch::RadarChart({ birch::DataElement{ 23, "AAA", sf::Color{255, 105, 97} },
+                                            birch::DataElement{ 14, "BBB", sf::Color{255, 179, 71} },
+                                            birch::DataElement{ 33, "CCC", sf::Color{119, 190, 119} },
+                                            birch::DataElement{ 12, "DDD", sf::Color{150, 111, 214} },
+                                            birch::DataElement{ 19, "EEE", sf::Color{120, 210, 214} }
                                           }, 200.f);
             dynamic_cast<birch::RadarChart*>(graph)->point_radius = 10.f ;
             std::cout << "Plot line is dotted ? (y/n) ";
@@ -150,15 +150,15 @@ void Demo()
             graph = new birch::MultiLineChart(
                     { { 13, 20 }, { 24, 56 }, { 12, 37 }, { 23, 29 }, { 11, 14 }, { 24, 18 } },
                     { "0", "1", "2", "3", "4", "5" },
-                    { sf::Color(50, 200, 50), sf::Color(50, 50, 200) });
+                    { sf::Color{50, 200, 50}, sf::Color{50, 50, 200} });
             dynamic_cast<birch::MultiLineChart*>(graph)->setFillColor(0, sf::Color::Red);
             dynamic_cast<birch::MultiLineChart*>(graph)->setFillColor(1, sf::Color::Green);
-            graph->legend.addData({ { "Walking", sf::Color(50, 200, 50) },
-                                    { "Abnormal", sf::Color(50, 50, 200) } });
+            graph->legend.addData({ { "Walking", sf::Color{50, 200, 50} },
+                                    { "Abnormal", sf::Color{50, 50, 200} } });
             break;
 
         case '8':
-            graph = new birch::ColumnChart(
+            graph = new birch::StackedBarChart(
                     { { 20, 20, 35 }, { 35, 56, 21 }, { 12, 17, 19 }, { 23, 29, 11 } },
                     { "AAA", "BBB", "CCC", "DDD" },
                     { sf::Color{50, 200, 5}, sf::Color{50, 50, 200}, sf::Color{200, 50, 50} });
@@ -171,7 +171,9 @@ void Demo()
         case '9':
             graph = new birch::BubbleChart({ { "AAA", sf::Color{50, 50, 200}, 23.f, 100.f, 65.f },
                                              { "BBB", sf::Color{50, 200, 50}, 32.f, 200.f, 35.f },
-                                             { "CCC", sf::Color{200, 50, 50}, 19.f, 300.f, 100.f }
+                                             { "CCC", sf::Color{200, 50, 50}, 19.f, 300.f, 100.f },
+                                             { "DDD", sf::Color{200, 50, 100}, 27.f, 325.f, 200.f },
+                                             { "EEE", sf::Color{200, 200, 0}, 53.f, 350.f, 100.f }
                                            });
             break;
 
@@ -183,6 +185,8 @@ void Demo()
         DrawOnScreen(graph); // this actually draws the screen
         std::cin.get();
         std::cin.get();
+
+        delete graph ;
 
         // Clear screen
         for(int i = 0; i < 1000; ++i)

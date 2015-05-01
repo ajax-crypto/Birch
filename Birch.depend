@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1427800252 source:f:\code\c++\birch\main.cpp
+1429261420 source:f:\code\c++\birch\main.cpp
 	"include\birch.h"
 	<thread>
 	<chrono>
@@ -13,7 +13,7 @@
 	"radar.h"
 	"bubble.h"
 
-1427800220 f:\code\c++\birch\include\base.h
+1427820370 f:\code\c++\birch\include\base.h
 	"graphics.h"
 	"log.h"
 	<vector>
@@ -356,10 +356,10 @@
 	<string>
 	<vector>
 
-1427726622 f:\code\c++\birch\include\bar.h
+1427963656 f:\code\c++\birch\include\bar.h
 	"base.h"
 
-1427726907 source:f:\code\c++\birch\src\bar.cpp
+1428761694 source:f:\code\c++\birch\src\bar.cpp
 	"..\include\bar.h"
 
 1426857516 source:f:\code\c++\birch\src\base.cpp
@@ -406,7 +406,7 @@
 1426868696 source:f:\code\c++\birch\src\graphics.cpp
 	"../include/graphics.h"
 
-1427798401 source:f:\code\c++\birch\src\bubble.cpp
+1427800357 source:f:\code\c++\birch\src\bubble.cpp
 	"../include/bubble.h"
 
 1427799769 f:\code\c++\birch\include\bubble.h

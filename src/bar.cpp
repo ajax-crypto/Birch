@@ -171,9 +171,9 @@ namespace birch
         FEND;
     }
 
-    ColumnChart::ColumnChart(const std::vector<std::vector<float>>& d1,
-                             const std::vector<std::string>& d2,
-                             const std::vector<sf::Color>& d3)
+    StackedBarChart::StackedBarChart(const std::vector<std::vector<float>>& d1,
+                                     const std::vector<std::string>& d2,
+                                     const std::vector<sf::Color>& d3)
     : multi_data{d1}, axes_labels{d2}, bar_colors{d3}, gap{10}
     {
         FSTART;
@@ -191,7 +191,7 @@ namespace birch
         FEND;
     }
 
-    void ColumnChart::render()
+    void StackedBarChart::render()
     {
         FSTART;
         float x = chart_offsets.x/2.f + gap, y = chart_offsets.y/2.f ;

@@ -213,8 +213,9 @@ namespace birch
 
         // foreground chart texture (adjust for margins)
         sf::Sprite csprite;
-        chart_texture.setSmooth(true);
+        //chart_texture.setSmooth(true);
         chart_texture.display();
+        chart_texture.setSmooth(true);
         csprite.setTexture(chart_texture.getTexture());
         csprite.move(sf::Vector2f(screen_margins.left, screen_margins.top));
         window->draw(csprite);
